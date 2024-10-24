@@ -1,7 +1,12 @@
+// [ ] Implementar os métodos de depósito (deposit) e saque (withdraw) na classe DioAccount
+//   - Os valores dos saldos devem ser alterados, de acordo com o valor informado para depósito
+//   - Apenas contas com o status true e saldo (balance) maior que o valor solicitado podem fazer saques
+
+
 export abstract class DioAccount {
   private name: string
   private readonly accountNumber: number
-  balance: number = 0
+  balance: number = 0 // atributo que e responsavel por armazenar o valor do saldo
   private status: boolean = true
 
   constructor(name: string, accountNumber: number){
@@ -18,14 +23,18 @@ export abstract class DioAccount {
     return this.name
   }
 
-  deposit = (): void => {
-    if(this.validateStatus()){
-      console.log('Voce depositou')
+  deposit = (valor : number): void => { // funcao de depositar
+    if(this.validateStatus()==true) {
+      this.balance = this.balance + valor
+      console.log(`Deposito realizado com sucesso! no valor de: ${valor}`)
     }
   }
 
-  withdraw = (): void => {
-    console.log('Voce sacou')
+  withdraw = (valor : number ): void => { // funcao de sacar
+    if(this.validateStatus()==true) {
+      this.balance = this.balance - valor
+      console.log(`Saque realizado com sucesso! no valor de: ${valor}`)
+    }
   }
 
   getBalance = (): void => {
@@ -39,4 +48,9 @@ export abstract class DioAccount {
 
     throw new Error('Conta inválida')
   }
+  
+  public isValidStatus = (): boolean => {
+    return this.validateStatus();
+  }
+
 }
